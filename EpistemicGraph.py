@@ -11,8 +11,10 @@ class EG:
         self.dark = dark
         self.format_str = format_str
 
+        # neato could be useful for heavier graphs
         self.graph = Digraph(name, filename=name, format=format_str, engine='dot')
-        self.graph.attr(ratio='0.4')
+        self.graph.attr(ratio='0.2') # for dot
+        #self.graph.attr(overlap='false', sep='+1') # for neato
         self.graph.attr(rankdir='BT')
         if self.format_str != 'svg':
             self.graph.attr(dpi='300')
@@ -33,6 +35,15 @@ class EG:
         new_s += 'A' * num_replacements
         return new_s
 
+    def link(self, side, A, B):
+        arg_color = 'white' if self.dark else 'black'
+        if side == 'for':
+            arg_color = EG.green
+        elif side == 'against':
+            arg_color = EG.red
+
+        self.graph.edge(A, B, color=arg_color)
+
     def node(self, side, arg_str, conns, primary=False, url=''):
         arg_color = 'white' if self.dark else 'black'
         if side == 'for':
@@ -44,7 +55,11 @@ class EG:
         if self.format_str == 'svg' and url != '':
             self.graph.node(self.arg_name, f'{self.arg_name} = {arg_str}\n(click for link)', color=arg_color, rank=rank, URL=url)
         else:
-            self.graph.node(self.arg_name, f'{self.arg_name} = {arg_str}\n{url}', color=arg_color, rank=rank)
+            if url != '':
+                self.graph.node(self.arg_name, f'{self.arg_name} = {arg_str}\n(see footnotes)', color=arg_color, rank=rank)
+                print(f'{self.arg_name}: {url}')
+            else:
+                self.graph.node(self.arg_name, f'{self.arg_name} = {arg_str}', color=arg_color, rank=rank)
 
         for c in conns:
             self.graph.edge(self.arg_name, c, color=arg_color)
