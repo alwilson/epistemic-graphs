@@ -2,7 +2,7 @@
 
 import EpistemicGraph
 
-eg = EpistemicGraph.EG('mail-in', 'png', True)
+eg = EpistemicGraph.EG('mail-in', 'png', False)
 
 # Primary claim
 primary_claim = 'Mail-in voting is a good addition to in-person voting. (USA)'
@@ -22,7 +22,7 @@ partison_turnout = eg.node('for', 'No impact on partisan vote share.', [unknown_
 fraud = eg.node('against', 'Easier to commit fraud.', [primary])
 not_ready = eg.node('against', 'Mail infrastructure is not prepared\nfor widespread mail-in voting.', [primary])
 
-fud = eg.node('against', 'Hard to find evidence,\nthus low confidence.', [fraud])
+fud = eg.node('against', 'Hard to find evidence,\nbut solid concern.', [fraud])
 partial = eg.node('against', 'Can still be implemented\npartially and within reason.', [not_ready])
 
 # Title

@@ -2,7 +2,7 @@
 
 import EpistemicGraph
 
-eg = EpistemicGraph.EG('prayer', 'png', True)
+eg = EpistemicGraph.EG('prayer', 'png', False)
 
 # Primary claim
 primary_claim = 'God answers prayers through good feelings.'
